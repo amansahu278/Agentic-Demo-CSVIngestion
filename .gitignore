@@ -194,6 +194,21 @@ cython_debug/
 # PyPI configuration file
 .pypirc
 
+# Logs
+logs/
+
+# Design doc (local only, do not push)
+DESIGN.md
+
+# Pipeline output: do not commit pile contents or generated reports
+data/accepted/*
+!data/accepted/.gitkeep
+data/rejected/*
+!data/rejected/.gitkeep
+data/needs_review/*
+!data/needs_review/.gitkeep
+# data/reports/*.csv
+
 # Cursor
 #  Cursor is an AI-powered code editor. `.cursorignore` specifies files/directories to
 #  exclude from AI features like autocomplete and code analysis. Recommended for sensitive data

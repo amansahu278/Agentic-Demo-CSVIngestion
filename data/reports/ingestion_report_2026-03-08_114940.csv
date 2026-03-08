@@ -1,0 +1,4 @@
+path,decision,reasoning
+/Users/amansahu/Code/Agentic-Demo-CSVIngestion/data/incoming/bad.csv,rejected,"The CSV file is missing mandatory columns 'customer_id', 'email', and 'date', and there are no corresponding actual columns to cover these requirements."
+/Users/amansahu/Code/Agentic-Demo-CSVIngestion/data/incoming/fuzzy_columns.csv,needs_review,"The actual column 'cust_id' is a common abbreviation for 'customer_id', and it covers the missing mandatory column, warranting further review."
+/Users/amansahu/Code/Agentic-Demo-CSVIngestion/data/incoming/ok.csv,accepted,All mandatory columns are present and there are no load errors.

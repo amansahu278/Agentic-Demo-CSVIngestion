@@ -1,0 +1,6 @@
+# Columns that must be present (after optional fuzzy mapping) for a CSV to be accepted.
+# Names are case-sensitive unless we add normalisation.
+mandatory_columns:
+  - customer_id
+  - email
+  - date

@@ -1,0 +1,18 @@
+# LangGraph and LangChain (for graph and future agent)
+langgraph>=0.2.0
+langchain-core>=0.3.0
+
+# CSV and data
+pandas>=2.0.0
+
+# Config
+pyyaml>=6.0
+
+# Fuzzy string matching for column names
+rapidfuzz>=3.0.0
+
+# OpenAI for LLM decide node
+langchain-openai>=1.1.10
+
+# Load .env for API keys
+python-dotenv>=1.2.2
