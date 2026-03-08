@@ -8,9 +8,6 @@ pandas>=2.0.0
 # Config
 pyyaml>=6.0
 
-# Fuzzy string matching for column names
-rapidfuzz>=3.0.0
-
 # OpenAI for LLM decide node
 langchain-openai>=1.1.10
 

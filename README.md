@@ -33,7 +33,7 @@ PYTHONPATH=. .venv/bin/python run_graph.py
 - `config/mandatory_columns.yaml` — mandatory column names.
 - `config/settings.yaml` — app settings (e.g. `openai_model`). Override with `OPENAI_MODEL` env var.
 - `src/config.py` — paths and config loading.
-- `src/tools/` — shared tools (load, validate, fuzzy_match, normalize, move, report).
+- `src/tools/` — shared tools (load, validate, normalize, move, report).
 - `src/graph_agent/` — explicit graph: state, nodes, conditional edges, compiled graph.
 - `src/logging_config.py` — logging to terminal and `logs/ingestion.log`; each graph step logs what it returns.
 - `run_graph.py` — driver: list CSVs in `data/incoming/`, invoke graph per file, write report CSV.
