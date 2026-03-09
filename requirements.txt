@@ -1,6 +1,7 @@
 # LangGraph and LangChain (for graph and future agent)
 langgraph>=0.2.0
 langchain-core>=0.3.0
+langchain>=1.2.10
 
 # CSV and data
 pandas>=2.0.0
@@ -13,3 +14,6 @@ langchain-openai>=1.1.10
 
 # Load .env for API keys
 python-dotenv>=1.2.2
+
+# Observability (optional)
+langfuse>=3.14.5

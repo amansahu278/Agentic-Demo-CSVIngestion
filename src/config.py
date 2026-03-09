@@ -31,7 +31,7 @@ def load_mandatory_columns(path: Path | None = None) -> list[str]:
 
 
 def _load_settings() -> dict:
-    """Load settings.yaml; return empty dict if missing."""
+    """Load settings.yaml; return empty dict if missing. Used for OpenAI model and overrides."""
     if not SETTINGS_PATH.exists():
         return {}
     with SETTINGS_PATH.open() as f:
@@ -48,3 +48,16 @@ def get_openai_model() -> str:
 def get_openai_api_key() -> str | None:
     """OpenAI API key from environment (after dotenv load)."""
     return os.environ.get("OPENAI_API_KEY")
+
+
+def get_agent_recursion_limit() -> int:
+    """Max steps for the agent loop (config/settings.yaml), overridden by INGESTION_AGENT_RECURSION_LIMIT env."""
+    settings = _load_settings()
+    default = settings.get("agent_recursion_limit", 25)
+    env_val = os.environ.get("INGESTION_AGENT_RECURSION_LIMIT")
+    if env_val is not None:
+        try:
+            return int(env_val)
+        except ValueError:
+            pass
+    return int(default) if isinstance(default, int) else 25

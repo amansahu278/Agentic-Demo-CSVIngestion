@@ -1,2 +1,5 @@
 # App settings (paths, LLM, etc.)
 openai_model: "gpt-4o-mini"
+
+# Max number of steps in the agent loop (LLM decide -> tools -> LLM -> ...). Stops when limit reached.
+agent_recursion_limit: 25

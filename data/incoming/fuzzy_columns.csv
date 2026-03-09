@@ -1,2 +1,2 @@
-cust_id,email,date
+cust_id,email_address,date
 10,user@example.com,2025-02-01

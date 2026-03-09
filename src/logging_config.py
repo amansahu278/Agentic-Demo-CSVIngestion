@@ -12,10 +12,14 @@ INGESTION_LOGGER = "ingestion"
 
 
 def setup_logging(
-    level: int = logging.INFO,
+    level: int | None = None,
     log_file: Path | None = None,
+    *,
+    debug: bool = False,
 ) -> None:
     """Configure the ingestion logger to write to terminal and file."""
+    if level is None:
+        level = logging.DEBUG if debug else logging.INFO
     log_file = log_file or LOG_FILE
     LOGS_DIR.mkdir(parents=True, exist_ok=True)
 

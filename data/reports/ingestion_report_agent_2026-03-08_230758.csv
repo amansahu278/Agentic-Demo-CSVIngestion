@@ -1,0 +1,4 @@
+path,decision,reasoning,llm_calls,tool_calls,prompt_tokens,completion_tokens,total_tokens
+/Users/amansahu/Code/Agentic-Demo-CSVIngestion/data/incoming/bad.csv,rejected,Mandatory columns are missing and no reasonable mapping exists.,5,5,3244,280,3524
+/Users/amansahu/Code/Agentic-Demo-CSVIngestion/data/incoming/fuzzy_columns.csv,accepted,All mandatory columns are present.,5,4,3159,227,3386
+/Users/amansahu/Code/Agentic-Demo-CSVIngestion/data/incoming/ok.csv,accepted,All mandatory columns are present.,5,4,3162,206,3368
