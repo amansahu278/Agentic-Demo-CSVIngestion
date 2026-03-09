@@ -27,7 +27,7 @@ The pipeline needs a fixed set of **capabilities**. The implementations share th
 | **Load CSV** | Read a CSV and return column names and row count. | [src/tools/load.py](src/tools/load.py); used by both pipelines. |
 | **Validate columns** | Check that all mandatory columns (from config) are present. | [src/tools/validate.py](src/tools/validate.py). |
 | **Suggest column mapping** | When columns are missing, use an LLM to suggest mappings (e.g. `cust_id` → `customer_id`). Used for fuzzy cases that go to needs_review. | Graph: dedicated node; Agent: LangChain tool that calls an LLM. |
-| **Normalize CSV columns** | Rename columns in the file using a mapping (e.g. after a suggested mapping). | [src/tools/normalize.py](src/tools/normalize.py). |
+| **Normalize CSV columns** | (Optional) Rename columns in the file using a mapping (e.g. after a suggested mapping). | [src/tools/normalize.py](src/tools/normalize.py). |
 | **Move file to pile** | Copy the file into `accepted/`, `rejected/`, or `needs_review/`. | [src/tools/move.py](src/tools/move.py). |
 | **Report** | Append a row (path, decision, reasoning) to the run’s report. | Graph: explicit “append report” step; Agent: tool `append_report_entry`; both write via [src/tools/report.py](src/tools/report.py). |
 
@@ -47,7 +47,7 @@ The pipeline needs a fixed set of **capabilities**. The implementations share th
 
 ### Method 2 — ReAct agent (tool-calling agent)
 
-- **Idea:** One agent (LLM) that sees the file path and **chooses** which tools to call and in what order (load_csv, validate_columns, suggest_column_mapping, normalize_csv_columns, move_file_to_pile, append_report_entry) until it finishes. Flow is **agent → tools → agent → …** until the agent stops.
+- **Idea:** One agent (LLM) that sees the file path and **chooses** which tools to call and in what order (load_csv, validate_columns, suggest_column_mapping, move_file_to_pile, append_report_entry) until it finishes. Flow is **agent → tools → agent → …** until the agent stops.
 - **Entrypoint:** [run_agent.py](run_agent.py); graph and tools in [src/agent/](src/agent/).
 - **Architecture:**  
   `START → agent (LLM) → [if tool_calls: tools node] → agent → … → END (when no tool_calls)`
