@@ -97,7 +97,7 @@ def suggest_column_mapping(actual_columns: list[str], missing_columns: list[str]
         return f"No mapping suggested. {out.get('reasoning', '')}"
     return f"Suggested mapping: {out['mapping']}. Reasoning: {out.get('reasoning', '')}"
 
-
+# not being used, but shows a feature we could have
 @tool
 def normalize_csv_columns(file_path: str, column_mapping_json: str) -> str:
     """Rename columns in the CSV using a mapping. column_mapping_json must be a JSON object from actual column name to mandatory name, e.g. {\"cust_id\": \"customer_id\"}. Overwrites the file."""
@@ -126,7 +126,7 @@ def move_file_to_pile(file_path: str, pile: str) -> str:
 
 @tool
 def append_report_entry(file_path: str, decision: str, reasoning: str) -> str:
-    """Record the ingestion decision. Use decision needs_review (not accepted) when a suggested/fuzzy column mapping was used; accepted only when all mandatory columns were already present."""
+    """Record the ingestion decision. Use decision needs_review (not accepted) when suggest_column_mapping was used; accepted only when all mandatory columns were already present. Provide a short reasoning; mapping details are added automatically when applicable."""
     if decision not in ("accepted", "rejected", "needs_review"):
         return f"Invalid decision. Use one of: accepted, rejected, needs_review."
     return "Report entry recorded."
@@ -138,7 +138,6 @@ def get_agent_tools() -> list:
         load_csv,
         validate_columns,
         suggest_column_mapping,
-        normalize_csv_columns,
         move_file_to_pile,
         append_report_entry,
     ]

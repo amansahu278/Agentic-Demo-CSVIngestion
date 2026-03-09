@@ -28,7 +28,7 @@ def agent_node(state: AgentState) -> dict:
         temperature=0,
     ).bind_tools(tools)  # LLM can request any of load_csv, validate_columns, etc.
     response = llm.invoke(messages)
-    log.debug("agent_node: response %s", response)
+    # log.debug("agent_node: response %s", response)
     if response.tool_calls:
         names = [tc.get("name") for tc in response.tool_calls]
         log.debug("agent_node: LLM requested tool_calls: %s", names)
@@ -68,6 +68,19 @@ def _execute_tool(
         return f"Error: {e}"
 
 
+def _find_latest_suggest_mapping_result(messages: list) -> str | None:
+    """Return the content of the most recent ToolMessage that looks like suggest_column_mapping output, or None."""
+    found = None
+    for msg in messages or []:
+        if isinstance(msg, ToolMessage):
+            content = (getattr(msg, "content", None) or "") if hasattr(msg, "content") else ""
+            if isinstance(content, str) and (
+                content.startswith("Suggested mapping:") or content.startswith("No mapping suggested.")
+            ):
+                found = content
+    return found
+
+
 def _maybe_report_entry(tool_name: str, args: dict[str, Any]) -> dict[str, str] | None:
     """If this was append_report_entry, return one report row dict; otherwise None."""
     if tool_name != "append_report_entry":
@@ -103,6 +116,7 @@ def tools_node(state: AgentState) -> dict:
     tools_by_name = {t.name: t for t in get_agent_tools()}
     new_tool_messages = []
     new_report_rows = []
+    latest_suggest_result: str | None = None
 
     for tool_call in last_message.tool_calls:
         tool_name = tool_call.get("name")
@@ -112,12 +126,19 @@ def tools_node(state: AgentState) -> dict:
         log.debug("tools_node: calling tool %s with args %s", tool_name, args)
         result_text = _execute_tool(tool_name, args, tools_by_name, runnable_config)
         log.debug("tools_node: %s -> %s", tool_name, result_text)
+        if tool_name == "suggest_column_mapping":
+            latest_suggest_result = result_text
         new_tool_messages.append(
             ToolMessage(content=result_text, tool_call_id=tool_call_id)
         )
 
         report_row = _maybe_report_entry(tool_name, args)
         if report_row is not None:
+            extra = latest_suggest_result or _find_latest_suggest_mapping_result(messages)
+            if extra:
+                report_row["reasoning"] = (
+                    (report_row.get("reasoning") or "").strip() + "\n\nMapping suggestion: " + extra
+                )
             new_report_rows.append(report_row)
             log.debug("tools_node: state update report_entries += %s", report_row)
 

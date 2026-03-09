@@ -1,0 +1,8 @@
+path,decision,reasoning,llm_calls,tool_calls,prompt_tokens,completion_tokens,total_tokens
+/Users/amansahu/Code/Agentic-Demo-CSVIngestion/data/incoming/bad.csv,rejected,"Mandatory columns are missing and no reasonable mapping exists.
+
+Mapping suggestion: No mapping suggested. There are no actual columns that likely mean the same thing as the missing mandatory columns 'customer_id', 'email', and 'date'.",5,5,3013,250,3263
+/Users/amansahu/Code/Agentic-Demo-CSVIngestion/data/incoming/fuzzy_columns.csv,needs_review,"Columns were missing, but fuzzy mapping suggests possible correspondences.
+
+Mapping suggestion: Suggested mapping: {'cust_id': 'customer_id', 'email_address': 'email'}. Reasoning: The actual column 'cust_id' likely corresponds to the mandatory column 'customer_id' as they both refer to a unique identifier for customers. Similarly, 'email_address' is a more specific term that corresponds to the mandatory column 'email', which is a general term for the same data.",5,5,3153,263,3416
+/Users/amansahu/Code/Agentic-Demo-CSVIngestion/data/incoming/ok.csv,accepted,All mandatory columns are present.,5,4,2937,199,3136

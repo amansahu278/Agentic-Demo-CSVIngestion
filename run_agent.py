@@ -84,11 +84,11 @@ def main() -> None:
 Load it, validate its columns against the mandatory list, and decide whether to accept, reject, or flag for needs_review.
 
 Decision rules:
-- **accepted**: Only when validate_columns reported "All mandatory columns are present" and you did not use suggest_column_mapping or normalize_csv_columns.
-- **needs_review**: When columns were missing and you used suggest_column_mapping and/or normalize_csv_columns (fuzzy mapping). Do not accept such files—they must go to needs_review for human verification.
+- **accepted**: Only when validate_columns reported "All mandatory columns are present" and you did not use suggest_column_mapping.
+- **needs_review**: When columns were missing and you used suggest_column_mapping (fuzzy mapping). Do not accept such files—they must go to needs_review for human verification.
 - **rejected**: When mandatory columns are missing and no reasonable mapping exists (or suggest_column_mapping could not suggest one).
 
-Then move the file to the correct pile and call append_report_entry with the file path, your decision, and a short reasoning."""
+Then move the file to the correct pile and call append_report_entry with the file path, your decision, and a short reasoning (one line is fine; the system will append mapping details when suggest_column_mapping was used)."""
         )
         input_state = {"messages": [initial], "report_entries": report_entries}
         log.debug(
